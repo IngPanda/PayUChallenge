@@ -17,12 +17,14 @@ const startServer = async () => {
     console.log('Connected to MongoDB');
 
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
+    return server;
   } catch (error) {
     console.error('Error connecting to MongoDB', error);
   }
+
 };
 
 startServer();

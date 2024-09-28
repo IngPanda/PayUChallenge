@@ -6,8 +6,8 @@ const paymentService = new PaymentService();
 export class PaymentController {
     async processPayment(req: Request, res: Response) {
         try {
-            const { cardNumber, amount, expirationDate, code } = req.body;
-            if (!cardNumber  || amount <= 0  ) {
+            const { cardNumber, amount,  } = req.body;
+            if (!cardNumber  || amount <= 0 ) {
                 res.status(400).json({ error: 'Invalid payment data' });
               }
             const transaction = await paymentService.processPayment(cardNumber, amount);

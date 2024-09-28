@@ -23,10 +23,8 @@
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "mockingoose": "^2.16.2",
     "mongoose": "^8.7.0"
-  },
-  "jest": {
-    "setupFiles": ["<rootDir>/jest.setup.ts"]
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
