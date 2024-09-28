@@ -38,21 +38,21 @@ describe('Payment Controller', () => {
 
   it('should return a 400 error for invalid payment data', async () => {
     const paymentData = {
-      cardNumber: '1234',
+      cardNumber: '4111111111111111',
       amount: -50,
     };
 
     const _doc: ITransaction = {
       _id: '507f191e810c19729de860ea',
       cardNumber: '4111111111111111',
-      amount: 100,
+      amount: 50,
     } as ITransaction;
 
     mockingoose(Transaction).toReturn(_doc, 'save');
 
     const response = await request(app).post('/api/payments').send(paymentData);
     
-    expect(response).toBe(400);
+    expect(response.statusCode).toBe(400);
     expect(response.body).toHaveProperty('error');
   });
 });
