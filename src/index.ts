@@ -7,13 +7,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3002;
+const mongoURL = process.env.MONGODB_URI!;
 
 // Middleware
 app.use(bodyParser.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI!, { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions)
+console.log('Connect to mongo ', mongoURL)
+mongoose.connect(mongoURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  } as ConnectOptions)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
