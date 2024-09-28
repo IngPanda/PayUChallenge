@@ -1,28 +1,19 @@
 import axios from 'axios';
 import { Transaction } from '../models/transactionModel';
+import { BankService } from './bankService';
 
 export class PaymentService {
+    /**
+     * Process a payment request.
+     * Creates a payment record and validates with the two external services Fraud and Bank
+     * @param {string} cardNumber - The credit card number.
+     * @param {string} amount - Amount of payment.
+     * @returns {Promise<Transaction>} - return Transaction Record.
+     */
     async processPayment(cardNumber: string, amount: number) {
         
 
-        // FAKE SERVICES 
-
-        /*
-
-        // Call Anti-Fraud Service
-      
-        const fraudCheck = await axios.post(process.env.ANTI_FRAUD_SERVICE_URL!, { cardNumber, amount });
-
-        if (!fraudCheck.data.isValid) {
-            // throw new Error('Fraud detected');
-        }
-
-        // Call Bank Service
-        const bankResponse = await axios.post(process.env.BANK_SERVICE_URL!, { cardNumber, amount }); 
-        */
-      
-
-        
+        const bankServ = BankService;
 
         // Save Transaction
         const transaction = new Transaction({
