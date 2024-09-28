@@ -1,22 +1,26 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 import bodyParser from 'body-parser';
-import { processPayment, processRefund } from './controllers/paymentController';
+import paymentRoutes from './routes/paymentRoutes';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(bodyParser.json());
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost/payment-platform', { useNewUrlParser: true, useUnifiedTopology: true })
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI!, { useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// API Endpoints
-app.post('/api/pay', processPayment);
-app.post('/api/refund', processRefund);
+// Routes
+app.use('/api', paymentRoutes);
 
+// Start Server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

@@ -1,25 +1,18 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface ITransaction extends Document {
-    amount: number;
-    currency: string;
-    cardHolder: string;
+export interface ITransaction extends Document {
     cardNumber: string;
-    expirationDate: string;
-    cvv: string;
-    status: 'pending' | 'completed' | 'refunded';
+    amount: number;
+    status: string;
     createdAt: Date;
 }
 
 const transactionSchema: Schema = new Schema({
-    amount: { type: Number, required: true },
-    currency: { type: String, required: true },
-    cardHolder: { type: String, required: true },
     cardNumber: { type: String, required: true },
-    expirationDate: { type: String, required: true },
-    cvv: { type: String, required: true },
-    status: { type: String, enum: ['pending', 'completed', 'refunded'], default: 'pending' },
+    amount: { type: Number, required: true },
+    status: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model<ITransaction>('Transaction', transactionSchema);
+export const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);
+
