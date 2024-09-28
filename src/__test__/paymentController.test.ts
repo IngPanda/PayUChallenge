@@ -1,8 +1,10 @@
-// src/__tests__/paymentController.test.ts
+// src/tests/paymentController.test.ts
 
 import request from 'supertest';
 import app from '../index'; // Import the express app
 import mongoose, { ConnectOptions } from 'mongoose';
+
+jest.mock('mongoose');
 
 // Mock MongoDB connection
 beforeAll(async () => {

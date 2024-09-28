@@ -25,6 +25,9 @@
     "express": "^4.21.0",
     "mongoose": "^8.7.0"
   },
+  "jest": {
+    "setupFiles": ["<rootDir>/jest.setup.ts"]
+  },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.13",
