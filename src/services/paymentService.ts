@@ -8,16 +8,20 @@ export class PaymentService {
         // FAKE SERVICES 
 
         // Call Anti-Fraud Service
-        const fraudCheck = await axios.post(process.env.ANTI_FRAUD_SERVICE_URL!, { cardNumber, amount });
+        try {
+            const fraudCheck = await axios.post(process.env.ANTI_FRAUD_SERVICE_URL!, { cardNumber, amount });
 
-        
+            if (!fraudCheck.data.isValid) {
+                // throw new Error('Fraud detected');
+            }
+    
+            // Call Bank Service
+            const bankResponse = await axios.post(process.env.BANK_SERVICE_URL!, { cardNumber, amount }); 
 
-        if (!fraudCheck.data.isValid) {
-            // throw new Error('Fraud detected');
+        } catch (error) {
+            console.log("Error in fake services");
         }
 
-        // Call Bank Service
-        const bankResponse = await axios.post(process.env.BANK_SERVICE_URL!, { cardNumber, amount });
         
 
         // Save Transaction
