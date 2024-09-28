@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Transaction } from '../models/transactionModel';
 
 export class PaymentService {
-    async processPayment(cardNumber: string, amount: number) {
+    async processPayment(cardNumber: string, amount: number, code: number, expirationDate: string) {
         /*
         // Call Anti-Fraud Service
         const fraudCheck = await axios.post(process.env.ANTI_FRAUD_SERVICE_URL!, { cardNumber, amount });
@@ -19,6 +19,8 @@ export class PaymentService {
         const transaction = new Transaction({
             cardNumber,
             amount,
+            code,
+            expirationDate,
             status: "Ok"//bankResponse.data.status
         });
         await transaction.save();

@@ -1,31 +1,31 @@
+// src/app.ts
 import express from 'express';
-import mongoose, { ConnectOptions } from 'mongoose';
-import bodyParser from 'body-parser';
-import paymentRoutes from './routes/paymentRoutes';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import paymentRoutes from './routes/paymentRoutes';
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3002;
-const mongoURL = process.env.MONGODB_URI!;
+app.use(express.json());
 
-// Middleware
-app.use(bodyParser.json());
-
-// MongoDB Connection
-console.log('Connect to mongo ', mongoURL)
-mongoose.connect(mongoURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as ConnectOptions)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
-// Routes
 app.use('/api', paymentRoutes);
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI || '');
+    console.log('Connected to MongoDB');
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error connecting to MongoDB', error);
+  }
+};
+
+startServer();
+
+// Export the app for testing
+export default app;
